@@ -9,6 +9,7 @@ import json
 import urllib2
 import requests
 
+#To get an API key, go here: http://europeana.eu/portal/api/registration.html
 API_KEY = "SECRET"
 
 class Europeana:
