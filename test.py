@@ -63,6 +63,6 @@ if __name__ == '__main__':
         print "Link: ", i["link"]
         try:
             print "Image: ", i["edmPreview"][0]
-        except:
+        except KeyError:
             print "Image: None"
         print '\n'
