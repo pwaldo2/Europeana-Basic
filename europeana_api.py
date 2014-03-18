@@ -10,7 +10,7 @@ import urllib2
 import requests
 
 #To get an API key, go here: http://europeana.eu/portal/api/registration.html
-API_KEY = "SECRET"
+API_KEY = "pRTrsaZTD"
 
 class Europeana:
     def __init__(self, api_key):
@@ -34,7 +34,7 @@ class Europeana:
         Sets up the basic URL parameters for the Europeana API.  Returns a JSON data structure.
         JSON Keys: [u'apikey', u'success', u'items', u'itemsCount', u'action', u'requestNumber', u'totalResults']
         """
-        args = {'wskey': self.api_key, 
+        args = {'wskey': api_key, 
                 'query': query, 
                 'start': '1', 
                 'rows': '12', 
@@ -42,28 +42,77 @@ class Europeana:
                 
         return requests.get(self.search_url, params=args).json()
 
-              
+    def advanced_search(self, query, keywords=None, media_type=None, language=None, year=None, use=None):
+        """
+        Adding in some advanced query functionality
+        
+        TO DO:
+        Use is not working correctly
+        
+        """
+        args = {'wskey': self.api_key, 
+                'query': query,
+                'qf': [],
+                'start': '1', 
+                'rows': '12', 
+                'profile': 'standard'}
+                
+        if keywords and type(keywords) == list:
+            for key in keywords:
+                args['qf'].append(key)
+        else:
+            print 'Keywords must be a list type'
+            raise AttributeError
+                
+        if media_type:
+            args['qf'].append('TYPE:%s' % (media_type))
+        
+        if language:
+            args['qf'].append('LANGUAGE:%s' % (language))
+            
+        if year:
+            args['qf'].append('YEAR:%s' % (year))
+        
+        if use:
+            args['qf'].append('REUSABILITY:permission')
+            
+        return requests.get(self.search_url, params=args).json()
+        
     def mona_lisa(self):
         """
         Get back 12 results for the Mona Lisa:
-        API: http://europeana.eu/api//v2/search.json?wskey=pRTrsaZTD&query=Mona+Lisa&start=1&rows=12&profile=standard+portal+facets+breadcrumb+minimal+params
+        API: http://europeana.eu/api/v2/search.json?wskey=pRTrsaZTD&query=Mona+Lisa&start=1&rows=12&profile=standard+portal+facets+breadcrumb+minimal+params
         Web: http://europeana.eu/portal/search.html?query=Mona+Lisa&rows=12
         """
         return self.simple_search('Mona Lisa')
+        
+    def test_advanced(self):
+        """
+        Test advanced search.
+        API 1:http://europeana.eu/api/v2/search.json?wskey=pRTrsaZTD&query=Brussels&qf=TYPE:SOUND&rows=24&profile=standard+portal+facets+breadcrumb+minimal+params
+        Web 1: http://europeana.eu/portal/search.html?query=Brussels&qf=City&qf=TYPE:SOUND&rows=24
+        
+        API 2: http://europeana.eu/api/v2/search.json?wskey=pRTrsaZTD&query=Brussels&qf=TYPE:SOUND&qf=LANGUAGE:fr&qf=YEAR:2009&rows=24&profile=standard+portal+facets+breadcrumb+minimal+params
+        Web 2: http://europeana.eu/portal/search.html?query=Brussels&qf=TYPE:SOUND&qf=LANGUAGE:fr&qf=YEAR:2009&rows=24
+        """
+        
+        print self.advanced_search(query='Brussels', keywords=['City'], media_type='SOUND')
+        #print self.advanced_search(query='Brussels', media_type='SOUND', language='fr', year='2009')
 
 
 if __name__ == '__main__':
     
     EU = Europeana(API_KEY)
-    mona_lisa = EU.mona_lisa()
+    #mona_lisa = EU.mona_lisa()
+    print EU.test_advanced()
 
-    print "Found %d items for Mona Lisa\n" % (mona_lisa["itemsCount"])
-    
-    for i in mona_lisa["items"]:
-        print "Title: ", i["title"][0]
-        print "Link: ", i["link"]
-        try:
-            print "Image: ", i["edmPreview"][0]
-        except KeyError:
-            print "Image: None"
-        print '\n'
+    #print "Found %d items for Mona Lisa\n" % (mona_lisa["itemsCount"])
+    #
+    #for i in mona_lisa["items"]:
+    #    print "Title: ", i["title"][0]
+    #    print "Link: ", i["link"]
+    #    try:
+    #        print "Image: ", i["edmPreview"][0]
+    #    except KeyError:
+    #        print "Image: None"
+    #    print '\n'
