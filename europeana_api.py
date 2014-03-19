@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """
 February 23, 2014
 
@@ -48,19 +50,20 @@ class Europeana:
         
         TO DO:
         Use is not working correctly
-        
+        Document list of options
         """
         args = {'wskey': self.api_key, 
                 'query': query,
                 'qf': [],
                 'start': '1', 
-                'rows': '12', 
+                'rows': '24', 
                 'profile': 'standard'}
                 
         if keywords and type(keywords) == list:
             for key in keywords:
                 args['qf'].append(key)
-        else:
+        
+        if keywords and type(keywords) != list:
             print 'Keywords must be a list type'
             raise AttributeError
                 
@@ -97,7 +100,7 @@ class Europeana:
         """
         
         print self.advanced_search(query='Brussels', keywords=['City'], media_type='SOUND')
-        #print self.advanced_search(query='Brussels', media_type='SOUND', language='fr', year='2009')
+        print self.advanced_search(query='Brussels', media_type='SOUND', language='fr', year='2009')
 
 
 if __name__ == '__main__':
