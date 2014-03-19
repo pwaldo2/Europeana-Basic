@@ -12,7 +12,7 @@ import urllib2
 import requests
 
 #To get an API key, go here: http://europeana.eu/portal/api/registration.html
-API_KEY = "pRTrsaZTD"
+API_KEY = "SECRET"
 
 class Europeana:
     def __init__(self, api_key):
@@ -84,7 +84,7 @@ class Europeana:
     def mona_lisa(self):
         """
         Get back 12 results for the Mona Lisa:
-        API: http://europeana.eu/api/v2/search.json?wskey=pRTrsaZTD&query=Mona+Lisa&start=1&rows=12&profile=standard+portal+facets+breadcrumb+minimal+params
+        API: http://europeana.eu/api/v2/search.json?wskey=SECRET&query=Mona+Lisa&start=1&rows=12&profile=standard+portal+facets+breadcrumb+minimal+params
         Web: http://europeana.eu/portal/search.html?query=Mona+Lisa&rows=12
         """
         return self.simple_search('Mona Lisa')
@@ -92,10 +92,10 @@ class Europeana:
     def test_advanced(self):
         """
         Test advanced search.
-        API 1:http://europeana.eu/api/v2/search.json?wskey=pRTrsaZTD&query=Brussels&qf=TYPE:SOUND&rows=24&profile=standard+portal+facets+breadcrumb+minimal+params
+        API 1:http://europeana.eu/api/v2/search.json?wskey=SECRET&query=Brussels&qf=TYPE:SOUND&rows=24&profile=standard+portal+facets+breadcrumb+minimal+params
         Web 1: http://europeana.eu/portal/search.html?query=Brussels&qf=City&qf=TYPE:SOUND&rows=24
         
-        API 2: http://europeana.eu/api/v2/search.json?wskey=pRTrsaZTD&query=Brussels&qf=TYPE:SOUND&qf=LANGUAGE:fr&qf=YEAR:2009&rows=24&profile=standard+portal+facets+breadcrumb+minimal+params
+        API 2: http://europeana.eu/api/v2/search.json?wskey=SECRET&query=Brussels&qf=TYPE:SOUND&qf=LANGUAGE:fr&qf=YEAR:2009&rows=24&profile=standard+portal+facets+breadcrumb+minimal+params
         Web 2: http://europeana.eu/portal/search.html?query=Brussels&qf=TYPE:SOUND&qf=LANGUAGE:fr&qf=YEAR:2009&rows=24
         """
         
