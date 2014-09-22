@@ -10,7 +10,7 @@ import random
 import re
 
 #To get an API key, go here: http://europeana.eu/portal/api/registration.html
-API_KEY = "pRTrsaZTD"
+API_KEY = "SECRET"
 
 class EuropeanaHaikuGenerator(Europeana):
     """
